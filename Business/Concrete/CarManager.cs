@@ -22,5 +22,38 @@ namespace Business.Concrete
             // İş kodları (Yetkisi var mı? vb.)
             return _carDal.GetAll();
         }
+
+        public List<Car> GetCarsByBrandId(int brandId)
+        {
+            return _carDal.GetAll(c => c.BrandId == brandId);
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            return _carDal.GetAll(c => c.ColorId == colorId);
+        }
+
+        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        {
+            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+        }
+
+        public void Add(Car car)
+        {
+            if (car.DailyPrice < 1)
+            {
+                //hata fırlat
+                Console.WriteLine("Günlük Fiyat 0'dan büyük olmalı");
+            }
+            else if (car.Description.Length < 3)
+            {
+                //hata fırlat
+                Console.WriteLine("Açıklama uzunluğu en az 2 karakter olmalı");
+            }
+            else
+            {
+                _carDal.Add(car);
+            }
+        }
     }
 }
