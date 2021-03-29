@@ -20,7 +20,7 @@ namespace ConsoleUI
             //CarTest(car2);
             //BrandTest(brand2);
             //ColorTest(color2);
-            //CarDetailDtoTest();
+            CarDetailDtoTest();
         }
 
         private static void CarDetailDtoTest()

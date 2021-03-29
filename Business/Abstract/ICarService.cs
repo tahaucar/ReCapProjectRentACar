@@ -2,20 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Utilities.Results;
 using Entities.DTOs;
 
 namespace Business.Abstract
 {
     public interface ICarService
     {
-        List<Car> GetAll();
-        List<Car> GetCarsByBrandId(int brandId);
-        List<Car> GetCarsByColorId(int colorId);
-        List<Car> GetByDailyPrice(decimal min, decimal max);
-        List<CarDetailDto> GetCarDetails();
-        void Add(Car car);
-        void Delete(Car car);
-        void Update(Car car);
+        DataResult<List<Car>> GetAll();
+        DataResult<List<Car>> GetCarsByBrandId(int brandId);
+        DataResult<List<Car>> GetCarsByColorId(int colorId);
+        DataResult<List<Car>> GetByDailyPrice(decimal min, decimal max);
+        DataResult<List<CarDetailDto>> GetCarDetails();
+        Result Add(Car car);
+        Result Delete(Car car);
+        Result Update(Car car);
 
     }
 }

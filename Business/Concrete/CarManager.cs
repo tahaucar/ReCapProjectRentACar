@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -18,59 +20,60 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public List<Car> GetAll()
+        public DataResult<List<Car>> GetAll()
         {
             // İş kodları (Yetkisi var mı? vb.)
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
 
-        public List<Car> GetCarsByBrandId(int brandId)
+        public DataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetAll(c => c.BrandId == brandId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
         }
 
-        public List<Car> GetCarsByColorId(int colorId)
+        public DataResult<List<Car>> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetAll(c => c.ColorId == colorId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
 
-        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        public DataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
-            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max));
         }
 
-        public void Add(Car car)
+        public Result Add(Car car)
         {
             if (car.DailyPrice < 1)
             {
-                //hata fırlat
-                Console.WriteLine("Günlük Fiyat 0'dan büyük olmalı");
+                return new ErrorResult(Messages.DailyPriceInvalled);
             }
             else if (car.Description.Length < 3)
             {
-                //hata fırlat
-                Console.WriteLine("Açıklama uzunluğu en az 2 karakter olmalı");
+                return new ErrorResult(Messages.CarNameInvalled);
             }
             else
             {
                 _carDal.Add(car);
+                return new SuccessResult(Messages.CarAdded);
             }
 
         }
 
-        public void Delete(Car car)
+        public Result Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public void Update(Car car)
+        public Result Update(Car car)
         {
             _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public DataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
     }
 }
