@@ -8,10 +8,10 @@ namespace Business.Abstract
 {
     public interface IBrandService
     {
-        DataResult<List<Brand>> GetAll();
-        DataResult<Brand> GetById(int brandId);
-        Result Add(Brand brand);
-        Result Delete(Brand brand);
-        Result Update(Brand brand);
+        IDataResult<List<Brand>> GetAll();
+        IDataResult<Brand> GetById(int brandId);
+        IResult Add(Brand brand);
+        IResult Delete(Brand brand);
+        IResult Update(Brand brand);
     }
 }

@@ -18,7 +18,7 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        public Result Add(Rental rental)
+        public IResult Add(Rental rental)
         {
             if (rental.ReturnDate==null)
             {
@@ -32,23 +32,23 @@ namespace Business.Concrete
 
         }
 
-        public Result Delete(Rental rental)
+        public IResult Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public DataResult<List<Rental>> GetAll()
+        public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalListed);
         }
 
-        public DataResult<Rental> GetById(int Id)
+        public IDataResult<Rental> GetById(int Id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == Id));
         }
 
-        public Result Update(Rental rental)
+        public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
